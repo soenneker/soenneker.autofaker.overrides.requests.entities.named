@@ -16,7 +16,7 @@ public class NamedEntityRequestOverride : AutoFakerOverride<NamedEntityRequest>
     /// <returns>A value indicating whether the operation succeeded.</returns>
     public override bool CanOverride(AutoFakerContext context)
     {
-        return context.GenerateType.IsSubclassOf(typeof(NamedEntityRequest));
+        return typeof(NamedEntityRequest).IsAssignableFrom(context.GenerateType);
     }
 
     /// <summary>
@@ -25,5 +25,7 @@ public class NamedEntityRequestOverride : AutoFakerOverride<NamedEntityRequest>
     /// <param name="context">The context.</param>
     public override void Generate(AutoFakerOverrideContext context)
     {
+        var target = (context.Instance as NamedEntityRequest)!;
+        target.Name = context.Faker.Commerce.ProductName();
     }
 }

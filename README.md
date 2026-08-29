@@ -5,20 +5,30 @@
 
 # Soenneker.AutoFaker.Overrides.Requests.Entities.Named
 
-An AutoFaker (AutoBogus) override for the NamedEntityRequest object.
+An AutoFaker override that supplies a display name for `NamedEntityRequest` models.
 
-## Install
+## Installation
 
 ```bash
 dotnet add package Soenneker.AutoFaker.Overrides.Requests.Entities.Named
 ```
 
-## What you get
+## Usage
 
-- `NamedEntityRequestOverride` — An AutoFaker (AutoBogus) override for the NamedEntityRequest object.
+```csharp
+using Soenneker.AutoFaker.Overrides.Requests.Entities.Named;
+using Soenneker.AutoFaker.Overrides.Requests.Entity;
+using Soenneker.Requests.Entities.Named;
+using Soenneker.Utils.AutoBogus;
 
-## API at a glance
+var autoFaker = new AutoFaker();
+autoFaker.Config.Overrides =
+[
+    new EntityRequestOverride(),
+    new NamedEntityRequestOverride()
+];
 
-| API | What it does | Result / important behavior |
-| --- | --- | --- |
-| `NamedEntityRequestOverride.CanOverride(context)` | Executes the can override operation. | A value indicating whether the operation succeeded. |
+NamedEntityRequest request = autoFaker.Generate<NamedEntityRequest>();
+```
+
+`NamedEntityRequestOverride` applies to the base request and derived types and fills `Name` with a generated commerce product name. Register `EntityRequestOverride` too when the optional inherited `Id` should be a GUID string.
